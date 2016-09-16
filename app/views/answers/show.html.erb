@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @answer.user %>
+</p>
+
+<p>
+  <strong>Puzzle:</strong>
+  <%= @answer.puzzle %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @answer.answer %>
+</p>
+
+<p>
+  <strong>Answer orginal:</strong>
+  <%= @answer.answer_orginal %>
+</p>
+
+<p>
+  <strong>Success:</strong>
+  <%= @answer.success %>
+</p>
+
+<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<%= link_to 'Back', answers_path %>

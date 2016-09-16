@@ -1,0 +1,18 @@
+<div class="modal-header">
+  DELETE
+</div>
+<div class="modal-body">
+
+  Are You Sure?
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="delete()" ng-disabled="actionState==actionStates.onAction">
+    <i class="fa fa-cog fa-spin" ng-show="actionState==actionStates.onAction"></i>
+    <span ng-show="actionState==actionStates.onIdle">DELETE</span>
+  </button>
+
+  <button class="btn btn-warning pull-right" type="button" ng-click="dismiss()" ng-disabled="actionState==actionStates.onAction">
+    CANCEL
+  </button>
+</div>

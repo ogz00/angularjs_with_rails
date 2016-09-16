@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>REGISTER</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+    <form class="form" name="signUpForm" ng-submit="register(newUser)">
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.username.$touched && signUpForm.username.$invalid}">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name='username' id='username' placeholder="username"
+               ng-model="newUser.username" ng-minlength="2" required/>
+        <div class="help-block" ng-messages="signUpForm.username.$error" ng-if="signUpForm.username.$touched">
+          <p ng-message="minlength">Username {{formValidations.toShort}}</p>
+          <p ng-message="required">Username {{formValidations.required}}</p>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.email.$touched && signUpForm.email.$invalid}">
+        <label for="email">E-Mail</label>
+        <input class="form-control" type="email" name='email' id='email' placeholder="E-Mail"
+               ng-model="newUser.email" required/>
+        <div class="help-block" ng-messages="signUpForm.email.$error" ng-if="signUpForm.email.$touched">
+          <p ng-message="email">E-Mail Adress {{formValidations.incompatibleWithPattern}}</p>
+          <p ng-message="required">E-Mail {{formValidations.required}}</p>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.firstName.$touched && signUpForm.firstName.$invalid}">
+        <label for="firstName">First Name</label>
+        <input class="form-control" type="text" name='firstName' id='firstName' placeholder="First Name"
+               ng-model="newUser.firstName" ng-minlength="2"
+               required/>
+        <div class="help-block" ng-messages="signUpForm.firstName.$error" ng-if="signUpForm.firstName.$touched">
+          <p ng-message="minlength">First Name {{formValidations.toShort}}</p>
+          <p ng-message="required">First Name {{formValidations.required}}</p>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.lastName.$touched && signUpForm.lastName.$invalid}">
+        <label for="lastName">Last Name</label>
+        <input class="form-control" type="text" name='lastName' id='lastName' placeholder="Last Name"
+               ng-model="newUser.lastName" ng-minlength="2"
+               required/>
+        <div class="help-block" ng-messages="signUpForm.lastName.$error" ng-if="signUpForm.lastName.$touched">
+          <p ng-message="minlength">Last Name {{formValidations.toShort}}</p>
+          <p ng-message="required">Last Name {{formValidations.required}}</p>
+        </div>
+      </div>
+
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.birth_date.$touched && signUpForm.birth_date.$invalid}">
+        <label for="birth_date">Birth Date</label>
+        <div class="input-group">
+          <input type="text" name="birth_date" id="birth_date" class="form-control"
+                 ng-model="newUser.birth_date" datepicker-popup="{{dateFormat}}" is-open="isDatePickerOpened"
+                 min-date="minDate" datepicker-options="dateOptions" placeholder="DD.MM.YYYY"
+                 pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"
+                 close-text="Close" current-text="Today" clear-text="Clean" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </div>
+        <div class="help-block" ng-messages="signUpForm.birth_date.$error" ng-if="signUpForm.birth_date.$touched">
+          <p ng-message="date">Birth Date {{formValidations.incompatibleWithPattern}}</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Sex</label>
+        <div class="radio">
+          <label class="radio-inline">
+            <input id="gender" name="gender" ng-model="newUser.gender" type="radio" value="male">
+            Male
+          </label>
+          <label class="radio-inline">
+            <input name="gender" ng-model="newUser.gender" type="radio" value="female">
+            Female
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error':signUpForm.password.$touched && signUpForm.password.$invalid}">
+        <label for="password">Password</label>
+        <input class="form-control" type="password" name="password"  placeholder="password" minlength="8"
+               id="password" ng-model="newUser.password" required/>
+        <div class="help-block" ng-messages="signUpForm.password.$error" ng-if="signUpForm.password.$touched">
+          <p ng-message="minlength">Password {{formValidations.toShort}} should be at least 8 characters</p>
+          <p ng-message="required">Password {{formValidations.required}}</p>
+        </div>
+      </div>
+      <div class="form-group"
+           ng-class="{'has-error':
+           signUpForm.passwordConfirmation.$touched && signUpForm.passwordConfirmation.$invalid}">
+        <label for="password">Password Confirmation</label>
+        <input class="form-control" type="password" name="passwordConfirmation" placeholder="Password Confirmation"
+               id="passwordConfirmation" ng-model="newUser.password_confirmation" confirm-password="newUser.password" required/>
+
+        <div class="help-block"
+             ng-messages="signUpForm.passwordConfirmation.$error"
+             ng-if="signUpForm.passwordConfirmation.$touched">
+          <p ng-message="password">Password {{formValidations.incompatibleWithOther}}</p>
+          <p ng-message="required">Password {{formValidations.required}}</p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg pull-right" type="submit" ng-disabled="actionState==actionStates.onAction">
+        <i class="fa fa-cog fa-spin" ng-show="actionState==actionStates.onAction"></i>
+        <span ng-show="actionState==actionStates.onIdle">Proceed</span>
+      </button>
+    </form>
+  </div>
+</div>
+

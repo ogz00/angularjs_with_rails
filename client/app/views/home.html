@@ -1,0 +1,120 @@
+<section>
+  <aside class="sr-only loading-progress">
+    <span ng-if="loading" class="loading">Loading</span>
+    <span ng-if="!loading" class="not-loading">Done Loading</span>
+  </aside>
+
+    <div class="col-xs-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Messages from PuzzleUp</h3>
+        </div>
+        <div class="panel-body">
+          <p>Welcome to the PuzzleUp; a problem and games site where each week a different problem is put accross for
+            you
+            to think on and try to solve.</p>
+
+          <p>The fundamental aim of this site is to support and raise persons of the information age who have highly
+            developed capabilities of thinking, perceiving and problem solving and who are able to interpret different
+            cultures and contribute to contemporary civilisation.</p>
+
+          <p>To keep us on track and give us direction we look forward to hearing your criticisms and suggestions.</p>
+
+          <p>Hoping that wisdom, peace and love will master the future of the world we live in.</p>
+
+          <p>Emrehan Halici</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="panel panel-default main-puzzle-panel">
+
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ puzzles[selected.value].publishDate | date:'yyyy-MMMM-dd' }}
+
+            <span class="pull-right">No: {{ puzzles[selected.value].no }}</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <span class="pull-right" style="font-size: large">
+            <a href="" ng-click="selected.value = selected.value + 1; changePuzzle()" ng-show="selected.value < puzzles.length -1">
+              next&rarr;
+              </a>
+
+          </span>
+          <span class="pull-left">
+            <a href="" ng-click="selected.value= selected.value - 1; changePuzzle()" ng-show="selected.value >= 1">
+              &larr;prev</a>
+          </span>
+          <h3>
+            {{ puzzles[selected.value].name }}
+          </h3>
+          <h4>{{ puzzles[selected.value].question }}</h4>
+          <div class="col-md-8 col-sm-12">
+            <medium class="pull-left">Popularity: <span>{{votes[0]}}</span></medium>
+            <medium class="pull-right">Difficulty: <span>{{votes[1]}}</span></medium>
+          </div>
+          <span class="glyphicons glyphicons-chevron-right"></span>
+
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" ng-click="addComment(puzzles[selected.value])">
+          <h3 class="panel-title">Comments<span style="cursor: pointer" class="pull-right">Add Comment</span></h3>
+
+        </div>
+        <div class="panel-body">
+          <ol>
+            <li ng-repeat="comment in comments" class="list-comments">
+              <div class="panel">
+                <div class="panel panel-title">
+                  <span class="pull-left">{{comment.subject}} </span>
+                  <span class="pull-right">{{comment.user.username}}</span>
+                </div>
+                <div class="panel panel-body">
+                  {{comment.message}}
+                </div>
+              </div>
+
+            </li>
+          </ol>
+
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-xs-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Top 10 - Competitors</h3>
+        </div>
+        <div class="panel-body">
+          <ol>
+            <li ng-repeat="user in users">
+              {{user.name}} <span class="pull-right">400</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Top 10 - Puzzles</h3>
+        </div>
+        <div class="panel-body">
+          <ol>
+            <li ng-repeat="puzzle in puzzles | limitTo:10">
+              <span>{{puzzle.name | limitTo: 18 }}</span>
+              <span class="pull-right">90</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+
+    </div>
+
+</section>

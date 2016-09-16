@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @puzzle.date %>
+</p>
+
+<p>
+  <strong>No:</strong>
+  <%= @puzzle.no %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @puzzle.name %>
+</p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @puzzle.question %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @puzzle.answer %>
+</p>
+
+<p>
+  <strong>Maraton:</strong>
+  <%= @puzzle.maraton %>
+</p>
+
+<p>
+  <strong>Istabled:</strong>
+  <%= @puzzle.isTabled %>
+</p>
+
+<p>
+  <strong>Timestamp:</strong>
+  <%= @puzzle.timestamp %>
+</p>
+
+<%= link_to 'Edit', edit_puzzle_path(@puzzle) %> |
+<%= link_to 'Back', puzzles_path %>

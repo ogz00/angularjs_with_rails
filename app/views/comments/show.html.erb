@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Puzzle:</strong>
+  <%= @comment.puzzle %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @comment.user %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @comment.subject %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @comment.message %>
+</p>
+
+<p>
+  <strong>Publish:</strong>
+  <%= @comment.publish %>
+</p>
+
+<p>
+  <strong>Iscommenttop:</strong>
+  <%= @comment.isCommentTop %>
+</p>
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>

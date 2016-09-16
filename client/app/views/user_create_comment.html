@@ -1,0 +1,108 @@
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
+  ADD COMMENT
+</div>
+<div class="modal-body">
+
+  <form class="form" name="commentForm" ng-submit="create()">
+
+    <div class="form-group">
+      <label for="name">Problem: </label>
+      <label class="label label-primary" name='name' id='name'>{{puzzle.name}}</label>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error':commentForm.subject.$dirty && commentForm.subject.$invalid}">
+      <label for="subject">Subject</label>
+      <input class="form-control" type="text" name='name' id='subject' placeholder="subject"
+             ng-model="newComment.subject"
+             required/>
+    </div>
+    <div class="form-group">
+
+      <div class="row">
+        <div class="col-sm-2">Popularity</div>
+        <div class="col-sm-10">
+          <div class="btn-group">
+            <label class="pull-left">Worse &leftarrow; </label>
+            <label class="radio radio-inline first-radio">
+              <input type="radio" name="popularity" value="0" ng-model="newComment.popularity"/>
+              0
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="popularity" value="1" ng-model="newComment.popularity"/>
+              1
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="popularity" value="2" ng-model="newComment.popularity"/>
+              2
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="popularity" value="3" ng-model="newComment.popularity"/>
+              3
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="popularity" value="4" ng-model="newComment.popularity"/>
+              4
+            </label>
+            <label class="pull-right"> &rightarrow; Nice</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <div class="row">
+        <div class="col-sm-2">Difficulty</div>
+        <div class="col-sm-10">
+          <div class="btn-group">
+            <label class="pull-left">Easy &leftarrow; </label>
+            <label class="radio radio-inline first-radio">
+              <input type="radio" name="difficulty" value="0" ng-model="newComment.difficulty"/>0
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="difficulty" value="1" ng-model="newComment.difficulty"/>
+              1
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="difficulty" value="2" ng-model="newComment.difficulty"/>
+              2
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="difficulty" value="3" ng-model="newComment.difficulty"/>
+              3
+            </label>
+            <label class="radio radio-inline">
+              <input type="radio" name="difficulty" value="4" ng-model="newComment.difficulty"/>
+              4
+            </label>
+            <label class="pull-right"> &rightarrow; Hard</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error':commentForm.message.$dirty && commentForm.message.$invalid}">
+      <label for="message">Message</label>
+      <input class="form-control" type="text" name='message' id='message' placeholder="message"
+             ng-model="newComment.message"
+             required/>
+    </div>
+
+
+    <button class="btn btn-primary pull-right" ng-disabled="actionState==actionStates.onAction" type="submit">
+      <i class="fa fa-cog fa-spin" ng-show="actionState==actionStates.onAction"></i>
+      <span ng-show="actionState==actionStates.onIdle">ADD COMMENT</span>
+    </button>
+
+    <button class="btn btn-warning pull-left" type="button" ng-click="dismiss()">
+      CANCEL
+    </button>
+
+  </form>
+
+
+</div>
+
+<div class="modal-footer">
+
+</div>

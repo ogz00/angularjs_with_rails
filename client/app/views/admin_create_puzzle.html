@@ -1,0 +1,67 @@
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
+  ADD PUZZLE
+</div>
+<div class="modal-body">
+
+  <form class="form" name="puzzleForm" ng-submit="create(newPuzzle)">
+
+    <div class="form-group" ng-class="{'has-error':puzzleForm.name.$dirty && puzzleForm.name.$invalid}">
+      <label for="name">Name</label>
+      <input class="form-control" type="text" name='name' id='name' placeholder="Name"
+             ng-model="newPuzzle.name"
+             required/>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error':puzzleForm.question.$dirty && puzzleForm.question.$invalid}">
+      <label for="question">Question</label>
+      <textarea class="main-textarea" name='question' id='question' placeholder="Question Area.. type question"
+             ng-model="newPuzzle.question" ng-keyup="autoExpand($event)" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="answer">Answer</label>
+      <input class="form-control" type="text" name='answer' id='answer' placeholder="answer"
+             ng-model="newPuzzle.answer"/>
+    </div>
+
+    </label>
+
+    <div class="form-horizontal">
+      <label> PUBLISH:
+        <input class="col-xs-11" type="checkbox" name='publish' id='publish' placeholder="Publish"
+               ng-model="newPuzzle.publish"/>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="publishDate">Publish Date</label>
+      <input name="publishDate" type="datetime-local" class="form-control" id="publishDate"
+             ng-model="newPuzzle.publishDate">
+    </div>
+
+    <div class="form-group" ng-class="{'has-error':modalForm.price.$dirty && modalForm.price.$invalid}">
+      <label for="no">Question No</label>
+      <input class="form-control" type="number" name='no' id='no' min="0" placeholder="Question No"
+             ng-model="newPuzzle.no" required/>
+    </div>
+
+
+    <div class="form-group" ng-class="{'has-error':modalForm.price.$dirty && modalForm.price.$invalid}">
+      <label for="year">Marathon Year</label>
+      <input class="form-control" type="number" name='year' id='year' min="2016" placeholder="Marathon Year"
+             ng-model="newPuzzle.year" required ng-disabled="true"/>
+    </div>
+
+    <button class="btn btn-lg btn-primary pull-right" ng-disabled="actionState==actionStates.onAction" type="submit">
+      <i class="fa fa-cog fa-spin" ng-show="actionState==actionStates.onAction"></i>
+      <span ng-show="actionState==actionStates.onIdle">ADD</span>
+    </button>
+
+    <button class="btn btn-warning pull-left" type="button" ng-click="dismiss()">
+      CANCEL
+    </button>
+  </form>
+</div>
+<div class="modal-footer">
+
+</div>
