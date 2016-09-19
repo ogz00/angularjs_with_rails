@@ -1,5 +1,8 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:create, :update]
+
+  respond_to :json
 
   # GET /answers
   # GET /answers.json
@@ -25,15 +28,11 @@ class AnswersController < ApplicationController
   # POST /answers.json
   def create
     @answer = Answer.new(answer_params)
-
-    respond_to do |format|
-      if @answer.save
-        format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
-        format.json { render :show, status: :created, location: @answer }
-      else
-        format.html { render :new }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
+    @answer.user_id = current_user.id
+    if @answer.save
+      respond_with(@answer)
+    else
+      respond_with(@answer.errors)
     end
   end
 
@@ -69,6 +68,6 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:user_id, :puzzle_id, :answer, :answer_orginal, :success)
+      params.require(:answer).permit(:puzzle_id, :answer)
     end
 end

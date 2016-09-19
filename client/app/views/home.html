@@ -28,6 +28,7 @@
       </div>
     </div>
     <div class="col-xs-6">
+      <!--QUESTION PANEL -->
       <div class="panel panel-default main-puzzle-panel">
 
         <div class="panel-heading">
@@ -38,6 +39,8 @@
           </h3>
         </div>
         <div class="panel-body">
+
+          <!--NEXT AND PREV BUTTONS AREA -->
           <span class="pull-right" style="font-size: large">
             <a href="" ng-click="selected.value = selected.value + 1; changePuzzle()" ng-show="selected.value < puzzles.length -1">
               next&rarr;
@@ -48,11 +51,29 @@
             <a href="" ng-click="selected.value= selected.value - 1; changePuzzle()" ng-show="selected.value >= 1">
               &larr;prev</a>
           </span>
+
+          <!--QUESTION NAME AND QUESTION AREA -->
           <h3>
             {{ puzzles[selected.value].name }}
           </h3>
           <h4>{{ puzzles[selected.value].question }}</h4>
-          <div class="col-md-8 col-sm-12">
+          <!-- IMAGE AREA -->
+          <td><img  ng-show="puzzles[selected.value].imageFileName" ng-src="{{puzzles[selected.value].image}}"
+                    alt="Puzzle Image" class="img-responsive"/></td>
+
+          <div ng-show="signedIn()" class="form-group">
+            <label for="answer">Answer</label>
+            <input class="form-control" type="text" name='answer' id='answer' placeholder="answer"
+                   ng-model="puzzles[selected.value].answer"/>
+          </div>
+          <button  ng-show="signedIn()" class="btn btn-primary pull-right" ng-click="sendAnswer()"
+                   ng-disabled="!puzzles[selected.value].answer">Send</button>
+          <div ng-hide="signedIn()" class="form-group">
+            [ You need to be a member of this site
+            before you can submit an answer ]
+          </div>
+
+          <div class="col-sm-12" style="margin-top: 12px;">
             <medium class="pull-left">Popularity: <span>{{votes[0]}}</span></medium>
             <medium class="pull-right">Difficulty: <span>{{votes[1]}}</span></medium>
           </div>
@@ -61,7 +82,7 @@
         </div>
       </div>
       <div class="panel panel-default">
-        <div class="panel-heading" ng-click="addComment(puzzles[selected.value])">
+        <div class="panel-heading" ng-click="addComment(puzzles[selected.value])" ng-show="signedIn()">
           <h3 class="panel-title">Comments<span style="cursor: pointer" class="pull-right">Add Comment</span></h3>
 
         </div>
@@ -70,11 +91,15 @@
             <li ng-repeat="comment in comments" class="list-comments">
               <div class="panel">
                 <div class="panel panel-title">
-                  <span class="pull-left">{{comment.subject}} </span>
-                  <span class="pull-right">{{comment.user.username}}</span>
+                  <span class="col-xs-12">{{comment.subject}} </span>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel comment-body">
                   {{comment.message}}
+                </div>
+                <div class="panel comment-footer col-xs-12">
+                  <label class="pull-right comment-date">{{comment.createdAt | date:'dd-MM-yyyy HH:mm'}}</label>
+                  <label class="pull-left comment-name">{{comment.user.username}}</label>
+
                 </div>
               </div>
 

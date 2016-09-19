@@ -2,9 +2,9 @@
 
 ###*
  # @ngdoc service
- # @name puzzles.PuzzleWebService
+ # @name puzzles.AnswerWebService
  # @description
- # # PuzzleWebService
+ # # AnswerWebService
  # Factory in the puzzles.
 ###
 

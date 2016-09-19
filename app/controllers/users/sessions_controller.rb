@@ -2,6 +2,7 @@ class Users::SessionsController < Devise::SessionsController
 # before_action :configure_sign_in_params, only: [:create]
 
   respond_to :json
+
   after_filter :set_csrf_headers, only: [:create, :destroy]
 
   def create
@@ -19,6 +20,11 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
+  # GET /resource/sign_in
+  def new
+    super
+  end
+
   protected
   def set_csrf_headers
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
@@ -28,10 +34,6 @@ class Users::SessionsController < Devise::SessionsController
 #   render :json => {:success => false, :errors => ["Login failed."]}
 # end
 
-# GET /resource/sign_in
-# def new
-#   super
-# end
 
 # POST /resource/sign_in
 # def create

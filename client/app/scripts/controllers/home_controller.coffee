@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module 'puzzles'
-.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, Auth, PuzzleWebService, CommentWebService, VoteWebService) ->
+.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, Auth, PuzzleWebService, CommentWebService, VoteWebService, AnswerWebService) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
 
   Auth.currentUser().then(
@@ -16,6 +16,7 @@ angular.module 'puzzles'
     PuzzleWebService.getCurrent().then(
       (puzzles) ->
         $scope.puzzles = puzzles
+        $log.info $scope.puzzles
         getComments()
     )
 
@@ -96,3 +97,16 @@ angular.module 'puzzles'
         return
     )
     return
+
+    $scope.sendAnswer = () ->
+      if puzzles[selected.value].answer
+        answer =
+          answer : puzzles[selected.value].answer
+          puzzle_id: puzzles[selected.value].id
+
+        AnswerWebService.create(answer).then(
+          (result) ->
+            onSuccess(result)
+          (error) ->
+            onError(error)
+        )
