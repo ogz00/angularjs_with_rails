@@ -37,19 +37,21 @@ module PuzzleApp
       DeviseController.respond_to :html, :json
     end
 
-    # config.middleware.use ActionDispatch::Flash
-
-    # config.middleware.use config.session_store, config.session_options
-    # config.middleware.use Rack::MethodOverride
-    # config.middleware.use ActionDispatch::Cookies
-    # config.middleware.use ActionDispatch::Session::CookieStoretamam
-
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
       YAML.load(File.open(env_file)).each do |key, value|
         ENV[key.to_s] = value
       end if File.exists?(env_file)
     end
+
+    config.paperclip_defaults = {
+        :storage => :s3,
+        :bucket => ENV['S3_BUCKET_NAME'],
+        :s3_credentials => {
+            :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+            :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+        }
+    }
 
   end
 end

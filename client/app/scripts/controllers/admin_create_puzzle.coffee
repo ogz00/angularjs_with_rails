@@ -4,11 +4,11 @@
 'use strict';
 
 angular.module 'puzzles'
-.controller 'AdminCreatePuzzleController', ($rootScope, $controller, $modalInstance, $scope, $http, $log, $timeout, PuzzleWebService, puzzle, parent) ->
+.controller 'AdminCreatePuzzleController', ($rootScope, $controller, $modalInstance, $scope, Upload, $auth, $log, $timeout, PuzzleWebService, puzzle, parent, APIUrls) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
 
   $scope.parent = parent;
-
+  $scope.puzzleImage=null;
   $timeout(expand, 0);
 
   $scope.autoExpand = (e) ->
@@ -20,7 +20,6 @@ angular.module 'puzzles'
     $scope.autoExpand('TextArea')
 
   currentDate = $scope.getCurrentDate()
-
   datetime = currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear() + " " + currentDate.getHours() + ":" + currentDate.getMinutes()
 
 
@@ -36,13 +35,17 @@ angular.module 'puzzles'
   if puzzle
     puzzle.publishDate = new Date(puzzle.publishDate)
     $scope.newPuzzle = puzzle
-  #"2016-08-03T00:00:00.000+03:00"
-  #"14.09.2016 00:01"
-  #Wed Sep 14 2016 11:11:00 GMT+0300 (EEST)
 
   $scope.create = () ->
-    $scope.actionState = $scope.actionStates.onAction
+    $scope.setActionState($scope.actionStates.onAction)
     $scope.newPuzzle.publish_date = $scope.dateAsString($scope.newPuzzle.publishDate, true)
+    if $scope.puzzleImage?
+      createOrUpdateWithImage()
+    else
+      createWithOutImage()
+
+
+  createWithOutImage = () ->
     if puzzle
       PuzzleWebService.update($scope.newPuzzle).then(
         (result) ->
@@ -59,9 +62,34 @@ angular.module 'puzzles'
       )
 
 
+  createOrUpdateWithImage = ()->
+    method = if puzzle then 'PUT' else 'POST'
+    url= APIUrls.getUrl 'puzzles'
+
+    if method is 'PUT'
+      url+="/#{puzzle.id}"
+    puzzle=Object.toUnderscoreKeys($scope.newPuzzle)
+
+    Upload.upload({
+      url:url
+      method:method
+      data: {puzzle: puzzle}
+      file: $scope.puzzleImage
+      fileFormDataName: 'puzzle[image]'
+    }).progress((evt)->
+      $log.info 'progress', evt
+    ).success(
+      (data, status, headers, config) ->
+        onSuccess data
+    ).error(
+      (data, status, headers, config) ->
+        onError data
+    )
+
+
   onSuccess = (puzzle) ->
     $log.info 'create puzzle: ', puzzle
-    $scope.actionOnSuccess()
+    $scope.actionOnSuccess(true, 'puzzle creation is successfull')
     $modalInstance.close $scope.newPuzzle
 
   $scope.dismiss = ->

@@ -35,40 +35,27 @@ class PuzzlesController < ApplicationController
   # POST /puzzles.json
   def create
     @puzzle = Puzzle.new(puzzle_params)
-
-    respond_to do |format|
-      if @puzzle.save
-        format.html { redirect_to @puzzle, notice: 'Puzzle was successfully created.' }
-        format.json { render :show, status: :created, location: @puzzle }
-      else
-        format.html { render :new }
-        format.json { render json: @puzzle.errors, status: :unprocessable_entity }
-      end
-    end
+    @puzzle.image = params[:file]
+    @puzzle.save
+    respond_with(@puzzle)
   end
 
   # PATCH/PUT /puzzles/1
   # PATCH/PUT /puzzles/1.json
   def update
-    respond_to do |format|
-      if @puzzle.update(puzzle_params)
-        format.html { redirect_to @puzzle, notice: 'Puzzle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @puzzle }
-      else
-        format.html { render :edit }
-        format.json { render json: @puzzle.errors, status: :unprocessable_entity }
-      end
+    @puzzle.update(puzzle_params)
+    if (!params[:file].nil?)
+      @puzzle.image = params[:file]
     end
+    @puzzle.save
+    respond_with(@puzzle)
   end
 
   # DELETE /puzzles/1
   # DELETE /puzzles/1.json
   def destroy
     @puzzle.destroy
-    respond_to do |format|
-      format.html { redirect_to puzzles_url, notice: 'Puzzle was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    respond_with(@puzzle)
   end
 
   private
@@ -79,6 +66,6 @@ class PuzzlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def puzzle_params
-      params.require(:puzzle).permit(:no, :name, :question, :answer, :publish_date, :publish, :year)
+      params.require(:puzzle).permit(:no, :name, :question, :answer, :publish_date, :publish, :year, :score)
     end
 end

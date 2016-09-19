@@ -45,7 +45,7 @@ angular.module 'puzzles'
 
   $scope.formValidations=constants.formValidations
 
-  $scope.setActionState= (state=constants.actionStates.onIdle) ->
+  $scope.setActionState = (state=constants.actionStates.onIdle) ->
     $scope.actionState=state
 
   $scope.redirect2Root= ->

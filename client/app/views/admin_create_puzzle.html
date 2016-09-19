@@ -5,6 +5,14 @@
 
   <form class="form" name="puzzleForm" ng-submit="create(newPuzzle)">
 
+
+    <div class="form-group">
+
+      <img  ngf-thumbnail="puzzleImage || newPuzzle.image" style="width: 200px; height: 200px">
+      <div class="btn btn-default" ngf-select ng-model="puzzleImage" ngf-pattern="'image/*'"
+           accept="image/*" ngf-max-size="10MB" ngf-multiple="false">Upload Picture</div>
+    </div>
+
     <div class="form-group" ng-class="{'has-error':puzzleForm.name.$dirty && puzzleForm.name.$invalid}">
       <label for="name">Name</label>
       <input class="form-control" type="text" name='name' id='name' placeholder="Name"
