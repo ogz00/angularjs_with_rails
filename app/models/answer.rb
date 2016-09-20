@@ -5,4 +5,6 @@ class Answer < ActiveRecord::Base
   def as_json(options = {})
     super(options.merge({ except: [:answer_orginal, :success, :updated_at], include: :user }))
   end
+
+
 end

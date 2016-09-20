@@ -5,6 +5,11 @@ class PuzzlesController < ApplicationController
 
   respond_to :json
 
+
+  def correctAnswerRatio
+
+  end
+
   # GET /puzzles
   # GET /puzzles.json
   def index

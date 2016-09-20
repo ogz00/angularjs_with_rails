@@ -26,4 +26,4 @@ angular.module('puzzles').factory 'AnswerWebService', (RequestService) ->
     RequestService.get null, 'answers'
 
 
-  CommentWebService
+  AnswerWebService
