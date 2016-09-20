@@ -12,19 +12,27 @@ class Puzzle < ActiveRecord::Base
   end
 
 
-  def self.rightAnswerRatio(puzzleId)
+  def self.right_answers(puzzleId)
     sql = "SELECT puzzle_id
-			FROM answer a
-			WHERE a.puzzle_id= '#{puzzleId}' AND answer = (SELECT answer FROM puzzle WHERE puzzle_id= '#{puzzleId}'
+			FROM answers a
+			WHERE a.puzzle_id= '#{puzzleId}' AND answer = (SELECT answer FROM puzzles WHERE id = '#{puzzleId}'
 			AND NOT EXISTS (
 				SELECT *
-				FROM answer b
+				FROM answers b
 				WHERE b.puzzle_id = a.puzzle_id
 				AND a.user_id = b.user_id
 				AND b.created_at>a.created_at
 				));"
 
-    ActiveRecord::Base.connection.execute(sql)
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.to_a.length
+  end
+
+  def self.total_answers(puzzleId)
+    sql ="SELECT id FROM answers a WHERE puzzle_id='#{puzzleId}'
+		AND NOT EXISTS (SELECT * FROM answers b WHERE b.puzzle_id = a.puzzle_id AND a.user_id = b.user_id AND b.created_at>a.created_at);"
+    result = ActiveRecord::Base.connection.execute(sql)
+    result.to_a.length
   end
 
   def correct_answer

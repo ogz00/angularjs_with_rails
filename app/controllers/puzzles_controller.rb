@@ -1,19 +1,28 @@
 class PuzzlesController < ApplicationController
-  before_action :set_puzzle, only: [:show, :edit, :update, :destroy]
+  before_action :set_puzzle, only: [:show, :edit, :update, :destroy, :calculate_and_save_score]
   before_filter :authenticate_user!, only: [:create, :update]
 
 
   respond_to :json
 
-
-  def correctAnswerRatio
-
+  # PATCH/PUT /puzzles/calculate_score/1
+  # PATCH/PUT /puzzles/calculate_score/1.json
+  def calculate_and_save_score
+      current_score = PuzzlesHelper.calculate_score(@puzzle.id)
+      if current_score > 0
+        @puzzle.score = current_score
+        @puzzle.save
+        respond_with(@puzzle)
+      else
+        show_error ErrorCodePuzzleHasntAnsweredYet, "Puzzle hasn't Answered Yet"
+    end
   end
 
   # GET /puzzles
   # GET /puzzles.json
   def index
     @puzzles = Puzzle.all
+    respond_with @puzzles
   end
 
   # GET /puzzles/1
@@ -71,6 +80,6 @@ class PuzzlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def puzzle_params
-      params.require(:puzzle).permit(:no, :name, :question, :answer, :publish_date, :publish, :year, :score)
+      params.require(:puzzle).permit(:no, :name, :question, :answer, :publish_date, :publish, :year)
     end
 end

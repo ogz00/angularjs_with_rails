@@ -9,11 +9,11 @@ Rails.application.routes.draw do
     get 'comments/current', defaults: {format: :json}
     get 'comments/admin', defaults: {format: :json}
     get 'votes/current', defaults: {format: :json}
-
+    patch 'puzzles/calculate/:id' => 'puzzles#calculate_and_save_score', defaults: {format: :json}
 
     resources :votes, defaults: {format: :json}
     resources :comments , defaults: {format: :json}
-    resources :answers
+    resources :answers , defaults: {format: :json}
     resources :puzzles, defaults: {format: :json}
 
   end

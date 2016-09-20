@@ -63,13 +63,13 @@ angular.module 'puzzles'
     $scope.setActionState()
     $scope.showErrorNotification(error)
 
-  $scope.showSuccessNotification = (text='İşleminiz başarıyla gerçekleştrildi.', duration=5000) ->
+  $scope.showSuccessNotification = (text='Your operation was carried out successfully', duration=5000) ->
     Notification.success
       message: text
       delay: duration
     return
 
-  $scope.showErrorNotification = (error='Bilinmeyen bir hata gerçekleşti.', duration=5000) ->
+  $scope.showErrorNotification = (error='Unknown error has occurred.', duration=5000) ->
 
     text=error if typeof error is 'string'
 

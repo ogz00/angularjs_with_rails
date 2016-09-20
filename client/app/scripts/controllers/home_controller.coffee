@@ -36,7 +36,7 @@ angular.module 'puzzles'
 
 
   getVotes = (puzzleId) ->
-    $scope.votes = [0.0,0.0]
+    $scope.votes = [0.0, 0.0]
     if(!puzzleId)
       param = puzzle_id: $scope.puzzles[$scope.selected.value].id
       puzzleId = param.puzzle_id
@@ -98,15 +98,25 @@ angular.module 'puzzles'
     )
     return
 
-    $scope.sendAnswer = () ->
-      if puzzles[selected.value].answer
-        answer =
-          answer : puzzles[selected.value].answer
-          puzzle_id: puzzles[selected.value].id
+  $scope.sendAnswer = () ->
+    if $scope.puzzles[$scope.selected.value].answer
+      answered =
+        answer: $scope.puzzles[$scope.selected.value].answer
+        puzzle_id: $scope.puzzles[$scope.selected.value].id
+      $log.info "answered: ", answered
+      AnswerWebService.create({answered:answered}).then(
+        (result) ->
+          onSuccess(result)
+        (error) ->
+          onError(error)
+      )
 
-        AnswerWebService.create(answer).then(
-          (result) ->
-            onSuccess(result)
-          (error) ->
-            onError(error)
-        )
+
+  onSuccess = (answer) ->
+    $log.info 'answer: ', answer
+    $scope.actionOnSuccess(true, 'answer creation is successfull')
+
+
+  onError = (error) ->
+    $log.error 'create answer Error: ', error
+    $scope.actionOnError error

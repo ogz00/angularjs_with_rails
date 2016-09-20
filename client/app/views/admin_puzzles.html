@@ -8,13 +8,41 @@
         <button class="btn btn-success pull-right" ng-click="addPuzzle()"> Add Puzzle</button>
       </div>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="puzzle in puzzles">
-        <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"  > {{puzzle.name}}</a>
-        <a href class="pull-right" ng-click="addPuzzle(puzzle)"><i class="fa fa-fw fa-pencil"></i></a>
-        <a href class="pull-right" ng-click="deletePuzzle(puzzle)"><i class="fa fa-fw fa-trash-o"></i></a>
-      </li>
-
-    </ul>
+    <table class="table table-responsive table-bordered">
+      <thead>
+      <tr>
+        <th>Puzzle Name
+        </th>
+        <th>Score
+        </th>
+        <th>Calculate
+        </th>
+        <th>Edit
+        </th>
+        <th>Delete
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="puzzle in puzzles">
+        <td class="col-md-7">
+          <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"> {{puzzle.name}}</a>
+        </td>
+        <td class="col-md-1">
+          <label>{{puzzle.score}}</label>
+        </td>
+        <td class="col-md-1">
+          <button class="btn btn-primary" ng-click="calculateScore(puzzle.id)"><i class="fa fa-cogs"></i>
+          </button>
+        </td>
+        <td class="col-md-1">
+          <a href class="" ng-click="addPuzzle(puzzle)"><i class="fa fa-2x fa-pencil"></i></a>
+        </td>
+        <td class="col-md-1">
+          <a href class="" ng-click="deletePuzzle(puzzle)"><i class="fa fa-2x fa-trash-o"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

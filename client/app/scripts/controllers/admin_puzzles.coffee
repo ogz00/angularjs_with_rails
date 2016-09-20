@@ -63,5 +63,25 @@ angular.module 'puzzles'
       () ->
     )
 
+  $scope.calculateScore = (id) ->
+    PuzzleWebService.calculateScore(id).then(
+      (result) ->
+        onSuccessCalculate(result)
+      (error) ->
+        onErrorCalculate(error)
+    )
+
+  onSuccessCalculate = (puzzle) ->
+    $log.info 'puzzle: ', puzzle
+    $scope.actionOnSuccess(true, 'puzzle score calculation is successfull')
+
+
+  onErrorCalculate = (error) ->
+    $log.error 'puzzle score calculation error: ', error
+    $scope.actionOnError error
+
+
+
+
   getPuzzles()
 

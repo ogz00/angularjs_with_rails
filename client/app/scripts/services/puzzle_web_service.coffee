@@ -29,5 +29,14 @@ angular.module('puzzles').factory 'PuzzleWebService', (RequestService) ->
   PuzzleWebService.getPuzzles = () ->
     RequestService.get null, 'puzzles'
 
+  PuzzleWebService.calculateScore = (id) ->
+    RequestService.patch 'calculatePuzzleScore', id, id
+
+  PuzzleWebService.calculateAllScores = () ->
+    RequestService.patch 'calculatePuzzleScores'
+
+  PuzzleWebService.calculateScoresForSelected = (puzzleIds) ->
+    RequestService.patch 'calculatePuzzleScores', puzzleIds, null
+
 
   PuzzleWebService

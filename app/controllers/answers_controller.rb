@@ -30,9 +30,9 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.user_id = current_user.id
     if @answer.save
-      respond_with(@answer)
+      respond_with @answer
     else
-      respond_with(@answer.errors)
+      respond_with @answer.errors
     end
   end
 
@@ -68,6 +68,6 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:puzzle_id, :answer)
+      params.require(:answered).permit(:puzzle_id, :answer)
     end
 end

@@ -11,14 +11,13 @@ angular.module 'puzzles'
   .constant 'constants',
   formValidations:
     toShort: 'çok kısa.'
-    required: 'bilgisi gereklidir; lütfen doldurun.'
-    incompatibleWithPattern: 'hatalı bir format ile girdiniz.'
-    incompatibleWithOther: 'bilgileri birbiriyle uyumsuz.'
+    required: 'information is required; Please fill in.'
+    incompatibleWithPattern: 'You have entered the incorrect format.'
+    incompatibleWithOther: 'information incompatible with each other.'
   actionStates:
     onIdle:0
     onAction:1
   errorCodes:
-    2001: 'Herhangi bir ürün satın almadığınız için işlem gerçekleşmedi.'
-    2002: 'Ürün daha önce satın alınmış.'
-    2006: 'Herhangi bir sınav bulunamadı.'
+    2001: 'Puzzle Stats Not Found"'
+    2002: "Puzzle hasn't Answered Yet"
 
