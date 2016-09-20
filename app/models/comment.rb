@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   def as_json(options = {})
-    super(options.merge({ except: [:publish, :isCommentTop, :updated_at], include: :user }))
+    super(options.merge({ except: [:isCommentTop, :updated_at], include: :user }))
   end
 
   def self.current(puzzle_id)
