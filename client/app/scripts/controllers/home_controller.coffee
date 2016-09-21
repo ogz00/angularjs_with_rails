@@ -33,6 +33,9 @@ angular.module 'puzzles'
         $scope.comments = comments
     )
     getVotes()
+    $scope.currentPuzzle = $scope.puzzles[$scope.selected.value]
+    calculateBonus($scope.currentPuzzle)
+    getUserAnswer($scope.currentPuzzle.id)
 
 
   getVotes = (puzzleId) ->
@@ -56,7 +59,6 @@ angular.module 'puzzles'
   $scope.selected =
     value: 0
 
-  #$scope.comment = {}
   $scope.comments = []
 
 
@@ -72,6 +74,7 @@ angular.module 'puzzles'
   getUsers()
 
   $scope.changePuzzle = () ->
+    $scope.userAnswer = null
     getComments()
 
 
@@ -99,24 +102,54 @@ angular.module 'puzzles'
     return
 
   $scope.sendAnswer = () ->
-    if $scope.puzzles[$scope.selected.value].answer
+    currentPuzzle = $scope.puzzles[$scope.selected.value]
+    if currentPuzzle.answer
       answered =
-        answer: $scope.puzzles[$scope.selected.value].answer
-        puzzle_id: $scope.puzzles[$scope.selected.value].id
+        answer: currentPuzzle.answer
+        puzzle_id: currentPuzzle.id
       $log.info "answered: ", answered
-      AnswerWebService.create({answered:answered}).then(
-        (result) ->
-          onSuccess(result)
-        (error) ->
-          onError(error)
-      )
+      if $scope.userAnswer == null
+        AnswerWebService.create({answered: answered}).then(
+          (result) ->
+            onAnswerSuccess(result)
+          (error) ->
+            onAnswerError(error)
+        )
+      else
+        answered.id = $scope.userAnswer.id
+        AnswerWebService.update({answered: answered}).then(
+          (result) ->
+            onAnswerSuccess(result)
+          (error) ->
+            onAnswerError(error)
+        )
+
+  calculateBonus = (currentPuzzle) ->
+    currentDate = new Date()
+    timeDiff = Math.abs(currentDate.getTime() - new Date(currentPuzzle.publishDate).getTime());
+    diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    bonus = if diffDays < 6 then 6 - diffDays else 0
+    currentPuzzle.bonus = bonus
 
 
-  onSuccess = (answer) ->
+  onAnswerSuccess = (answer) ->
+    $scope.userAnswer = answer
     $log.info 'answer: ', answer
     $scope.actionOnSuccess(true, 'answer creation is successfull')
 
 
-  onError = (error) ->
+  onAnswerError = (error) ->
     $log.error 'create answer Error: ', error
     $scope.actionOnError error
+
+  getUserAnswer = (puzzleId) ->
+    AnswerWebService.getUserAnswer(puzzleId).then(
+      (answer) ->
+        if(answer.length > 0)
+          $scope.userAnswer = answer[0]
+          $log.info 'user answer: ' + $scope.userAnswer
+        else
+          $scope.userAnswer = null
+      (error) ->
+        $scope.userAnswer = null
+    )

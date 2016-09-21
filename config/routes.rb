@@ -4,16 +4,17 @@ Rails.application.routes.draw do
   root to: 'application#angular'
 
   scope 'api' do
-    devise_for :users, controllers: { sessions: 'users/sessions' }, defaults: {format: :json}
+    devise_for :users, controllers: {sessions: 'users/sessions'}, defaults: {format: :json}
     get 'puzzles/current', defaults: {format: :json}
     get 'comments/current', defaults: {format: :json}
     get 'comments/admin', defaults: {format: :json}
     get 'votes/current', defaults: {format: :json}
+    put 'answers/update/:id' =>'answers#update', defaults: {format: :json}
     patch 'puzzles/calculate/:id' => 'puzzles#calculate_and_save_score', defaults: {format: :json}
-
+    get 'answers/getUserAnswer/:puzzle_id' => 'answers#get_user_answer', defaults: {format: :json}
     resources :votes, defaults: {format: :json}
-    resources :comments , defaults: {format: :json}
-    resources :answers , defaults: {format: :json}
+    resources :comments, defaults: {format: :json}
+    resources :answers, defaults: {format: :json}
     resources :puzzles, defaults: {format: :json}
 
   end

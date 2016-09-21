@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, only: [:create, :update]
+  before_filter :authenticate_user!, only: [:create, :update, :get_user_answer]
 
   respond_to :json
 
@@ -23,6 +23,11 @@ class AnswersController < ApplicationController
   # GET /answers/1/edit
   def edit
   end
+  # GET /answers/:puzzleId
+  def get_user_answer
+    answer = AnswersHelper.findUsersPrevAnswers(current_user.id, params[:puzzle_id])
+    respond_with answer
+  end
 
   # POST /answers
   # POST /answers.json
@@ -32,21 +37,19 @@ class AnswersController < ApplicationController
     if @answer.save
       respond_with @answer
     else
-      respond_with @answer.errors
+      show_error ErrorCodeAnswerCannotCreate, "Your answer can not create, please try again"
     end
   end
 
   # PATCH/PUT /answers/1
   # PATCH/PUT /answers/1.json
   def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @answer }
-      else
-        format.html { render :edit }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
+    if @answer.update(answer_params)
+      respond_to do |format|
+        format.json { render :json => @answer }
       end
+    else
+      show_error ErrorCodeAnswerCannotUpdate, "Your answer can not update,  please try again"
     end
   end
 
@@ -61,13 +64,14 @@ class AnswersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_answer
-      @answer = Answer.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_answer
+    puts(params[:answered][:id])
+    @answer = Answer.find(params[:answered][:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def answer_params
-      params.require(:answered).permit(:puzzle_id, :answer)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def answer_params
+    params.require(:answered).permit(:puzzle_id, :answer)
+  end
 end

@@ -66,6 +66,7 @@
             <input class="form-control" type="text" name='answer' id='answer' placeholder="answer"
                    ng-model="puzzles[selected.value].answer"/>
           </div>
+          <small ng-show="userAnswer">Your last answer for this question is : {{userAnswer.answer}}</small>
           <button  ng-show="signedIn()" class="btn btn-primary pull-right" ng-click="sendAnswer()"
                    ng-disabled="!puzzles[selected.value].answer">Send</button>
           <div ng-hide="signedIn()" class="form-group">
@@ -76,6 +77,9 @@
           <div class="col-sm-12" style="margin-top: 12px;">
             <medium class="pull-left">Popularity: <span>{{votes[0]}}</span></medium>
             <medium class="pull-right">Difficulty: <span>{{votes[1]}}</span></medium>
+          </div>
+          <div class="col-sm-12 text-center" style="margin-top: 12px;">
+            <medium>Today's Bonus Point: <span style="font-weight: 600">{{puzzles[selected.value].bonus}}</span></medium>
           </div>
           <span class="glyphicons glyphicons-chevron-right"></span>
 
