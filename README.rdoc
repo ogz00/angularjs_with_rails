@@ -1,8 +1,10 @@
 == README
 
-rake db:create && db:migrate
+db_connection: **jdbc:postgresql://127.0.0.1/puzzle_development**
 
-cd client
+**rake db:create && db:migrate**
 
-grunt serve
+**cd client/**
+
+**grunt serve**
 
