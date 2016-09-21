@@ -13,11 +13,11 @@ angular.module 'puzzles'
 
   $scope.autoExpand = (e) ->
     element = if typeof e == 'object' then e.target else document.getElementById(e)
-    scrollHeight = element.scrollHeight -40
-    element.style.height =  scrollHeight + "px"
+    element.style.height = "30px";
+    element.style.height = (25+element.scrollHeight)+"px"
 
   expand = () ->
-    $scope.autoExpand('TextArea')
+    $scope.autoExpand('question')
 
   currentDate = $scope.getCurrentDate()
   datetime = currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear() + " " + currentDate.getHours() + ":" + currentDate.getMinutes()

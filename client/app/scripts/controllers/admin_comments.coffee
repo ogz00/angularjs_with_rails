@@ -50,15 +50,15 @@ angular.module 'puzzles'
     else
       $scope.open.id = null
 
-  $scope.changePublish(comment) ->
+  $scope.changePublish = (comment) ->
     CommentWebService.update(comment).then(
       (result) ->
         onSuccessUpdateComment(result)
       (error) ->
-        onErrorUpdateComment (error)
+        onErrorUpdateComment error
     )
 
-    onSuccessUpdateComment = (comment) ->
+  onSuccessUpdateComment = (comment) ->
     $log.info 'comment: ', comment
     $scope.actionOnSuccess(true, 'Comment update is successfull')
 

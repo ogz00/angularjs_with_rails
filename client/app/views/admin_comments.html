@@ -31,7 +31,7 @@
                 {{comment.message}}
               </td>
               <td class="col-md-1">
-                <input type="checkbox"
+                <input type="checkbox" ng-change="changePublish(comment)"
                        ng-model="comment.publish" >
               </td>
             </tr>

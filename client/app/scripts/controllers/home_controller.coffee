@@ -4,9 +4,9 @@
 'use strict';
 
 angular.module 'puzzles'
-.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, Auth, PuzzleWebService, CommentWebService, VoteWebService, AnswerWebService) ->
+.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, $state, Auth, PuzzleWebService, CommentWebService, VoteWebService, AnswerWebService) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
-
+  $rootScope.$state = $state;
   Auth.currentUser().then(
     (user) ->
       $scope.user = user
