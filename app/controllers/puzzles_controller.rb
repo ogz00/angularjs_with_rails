@@ -9,12 +9,25 @@ class PuzzlesController < ApplicationController
   # PATCH/PUT /puzzles/calculate_score/1.json
   def calculate_and_save_score
       current_score = PuzzlesHelper.calculate_score(@puzzle.id)
-      if current_score > 0
+      if current_score >= 0
         @puzzle.score = current_score
         @puzzle.save
-        respond_with(@puzzle)
+        respond_to do |format|
+          format.json { render :json => @puzzle.score }
+        end
       else
         show_error ErrorCodePuzzleHasntAnsweredYet, "Puzzle hasn't Answered Yet"
+    end
+  end
+
+  def self.calculate_and_save_score_auto(puzzle_id)
+    @puzzle = Puzzle.find(puzzle_id)
+    current_score = PuzzlesHelper.calculate_score(@puzzle.id)
+    if current_score >= 0
+      @puzzle.score = current_score
+      @puzzle.save
+    else
+      puts "User answer dont change the score"
     end
   end
 

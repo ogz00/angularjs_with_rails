@@ -34,8 +34,17 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
     @answer.user_id = current_user.id
+    @puzzle = Puzzle.find(@answer.puzzle_id)
+    now = DateTime.now
+    time_diff = now - @puzzle.publish_date
+    diff_days = time_diff / (1000 * 3600 * 24)
+    bonus = if diff_days < 6 then 6 - diff_days else 0 end
+    @answer.bonus = bonus
     if @answer.save
-      respond_with @answer
+      PuzzlesController.calculate_and_save_score_auto(@answer.puzzle_id)
+      respond_to do |format|
+        format.json { render :json => @answer }
+      end
     else
       show_error ErrorCodeAnswerCannotCreate, "Your answer can not create, please try again"
     end
@@ -44,7 +53,18 @@ class AnswersController < ApplicationController
   # PATCH/PUT /answers/1
   # PATCH/PUT /answers/1.json
   def update
+    @puzzle = Puzzle.find(@answer.puzzle_id)
+    now = Time.now.getutc
+    puts "now #{now}"
+    puts "publish_date #{@puzzle.publish_date}"
+    time_diff = now - @puzzle.publish_date
+    puts "time_diff #{time_diff}"
+    diff_days = time_diff / (3600 * 24)
+    puts "diff_days #{diff_days}"
+    bonus = if diff_days < 6 then 6 - diff_days else 0 end
+    @answer.bonus = bonus
     if @answer.update(answer_params)
+      PuzzlesController.calculate_and_save_score_auto(@answer.puzzle_id)
       respond_to do |format|
         format.json { render :json => @answer }
       end

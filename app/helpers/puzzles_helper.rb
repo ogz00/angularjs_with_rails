@@ -19,7 +19,7 @@ module PuzzlesHelper
     if total_answer != 0
       return 100 - (right_answer*100 / total_answer)
     else
-      return 0
+      return -1
     end
   end
 

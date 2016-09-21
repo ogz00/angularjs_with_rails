@@ -147,6 +147,7 @@ angular.module 'puzzles'
       (answer) ->
         if(answer.length > 0)
           $scope.userAnswer = answer[0]
+          $scope.puzzles[$scope.selected.value].answer = $scope.userAnswer.answer
           $log.info 'user answer: ' + $scope.userAnswer
         else
           $scope.userAnswer = null
