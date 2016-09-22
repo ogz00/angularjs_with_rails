@@ -93,6 +93,10 @@ angular
     url: '/admin/comments',
     templateUrl: '../views/admin_comments.html'
     controller: 'AdminCommentsController'
+  .state 'adminScores',
+    url: '/admin/scores',
+    templateUrl: '../views/admin_current_scores.html'
+    controller: 'AdminUserScoresController'
 
   localStorageServiceProvider.setPrefix 'puzzles'
 

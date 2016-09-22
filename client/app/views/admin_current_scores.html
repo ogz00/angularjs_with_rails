@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4>User Scores For Admin</h4>
+      </div>
+      <div class="col-sm-6">
+        <button class="btn btn-success pull-right" ng-click="refresh()"> Refresh Scores</button>
+      </div>
+    </div>
+    <table class="table table-responsive table-bordered col-xs-8">
+      <thead>
+      <tr>
+        <th>Order
+        </th>
+        <th>User Name
+        </th>
+        <th>Score
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="userScore in userScores | orderBy:'no'">
+        <td class="col-md-1">
+          <label>{{$index +1}}</label>
+        </td>
+        <td class="col-md-7">
+          <a ui-sref="user.stats({userId:userScore.user.id})"> <span>{{userScore.user.firstName}}</span>
+            <span>{{userScore.user.lastName}}</span>
+          </a>
+        </td>
+        <td class="col-md-1">
+          <label>{{userScore.score}}</label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

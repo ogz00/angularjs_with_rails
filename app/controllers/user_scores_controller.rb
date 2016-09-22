@@ -1,5 +1,7 @@
 class UserScoresController < ApplicationController
-  before_action :set_user_score, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
+
+  respond_to :json
 
   def calculate_user_scores
     @scores = UserScoresHelper.calculate_user_scores

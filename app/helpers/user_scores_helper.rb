@@ -5,7 +5,6 @@ module UserScoresHelper
     year = Time.now.year
     all_puzzles = Puzzle.where(:year => year)
     @all_answers = Answer.all
-    @UserScores = []
     user_ids = []
     this_year_answers = []
 
@@ -39,14 +38,19 @@ module UserScoresHelper
           end
         end
       end
-      @UserScore = UserScore.create(:user_id => userId, :score => user_score, :year => year)
-      # unless UserScore.where(:user_id => userId)
-      #            .where(:year => year).empty?
-      #
-      # end
-      @UserScores << @UserScore
+      @user_old_score = UserScore.where(:user_id => userId)
+                            .where(:year => year)
+      unless @user_old_score.empty?
+        @user_old_score[0].update(:score => user_score)
+      else
+        @user_score_object = UserScore.new(:user_id => userId, :score => user_score, :year => year)
+        @user_score_object.save
+      end
+
+
     end
-    return @UserScores
+    return UserScore.where(:year => year)
+               .order('score desc')
   end
 
 
