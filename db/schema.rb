@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921145202) do
+ActiveRecord::Schema.define(version: 20160922113702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(version: 20160921145202) do
     t.datetime "image_updated_at"
     t.integer  "score"
   end
+
+  create_table "user_scores", force: :cascade do |t|
+    t.integer  "score"
+    t.integer  "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+  end
+
+  add_index "user_scores", ["user_id"], name: "index_user_scores_on_user_id", using: :btree
 
 # Could not dump table "users" because of following StandardError
 #   Unknown type 'gender' for column 'gender'

@@ -24,7 +24,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="puzzle in puzzles">
+      <tr ng-repeat="puzzle in puzzles | orderBy:'no'">
         <td class="col-md-7">
           <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"> {{puzzle.name}}</a>
         </td>

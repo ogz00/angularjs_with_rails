@@ -69,9 +69,9 @@
           <small ng-show="userAnswer">Your last answer for this question is : {{userAnswer.answer}}</small>
           <button  ng-show="signedIn()" class="btn btn-primary pull-right" ng-click="sendAnswer()"
                    ng-disabled="!puzzles[selected.value].answer">Send</button>
-          <div ng-hide="signedIn()" class="form-group">
-            [ You need to be a member of this site
-            before you can submit an answer ]
+          <div ng-hide="signedIn()" class="col-xs-8 col-xs-offset-2">
+            <span style="font-weight: 600">[ You need to be a member of this site
+            before you can submit an answer ]</span>
           </div>
 
           <div class="col-sm-12" style="margin-top: 12px;">

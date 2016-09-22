@@ -16,7 +16,7 @@ angular.module('puzzles').factory 'AnswerWebService', (RequestService) ->
     RequestService.post 'answers', answer
 
   AnswerWebService.update = (answer) ->
-    RequestService.put 'answers_update', answer, answer.id
+    RequestService.put 'answersUpdate', answer, answer.id
 
 
   AnswerWebService.delete = (id) ->

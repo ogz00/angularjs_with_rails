@@ -33,10 +33,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-    # In Rails 4.2 and above
-    def verified_request?
-      super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
-    end
+  # In Rails 4.2 and above
+  def verified_request?
+    super || form_authenticity_token == request.headers['X-XSRF-TOKEN']
+  end
 
   private
   def configure_permitted_parameters
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user_from_token!
     authenticated = authenticate_with_http_token do |user_token, options|
       user_email = options[:email].presence
-      user       = user_email && User.find_by_email(user_email)
+      user = user_email && User.find_by_email(user_email)
 
       if user && Devise.secure_compare(user.authentication_token, user_token)
         sign_in user, store: false
@@ -83,5 +83,7 @@ class ApplicationController < ActionController::Base
     @error_title = ErrorDescriptionTable[@error_code.to_i]
     render :template => 'layouts/error', :status => :bad_request, :format => :json
   end
+
+
 
 end

@@ -20,17 +20,6 @@ class PuzzlesController < ApplicationController
     end
   end
 
-  def self.calculate_and_save_score_auto(puzzle_id)
-    @puzzle = Puzzle.find(puzzle_id)
-    current_score = PuzzlesHelper.calculate_score(@puzzle.id)
-    if current_score >= 0
-      @puzzle.score = current_score
-      @puzzle.save
-    else
-      puts "User answer dont change the score"
-    end
-  end
-
   # GET /puzzles
   # GET /puzzles.json
   def index
@@ -64,7 +53,9 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.new(puzzle_params)
     @puzzle.image = params[:file]
     @puzzle.save
-    respond_with(@puzzle)
+    respond_to do |format|
+      format.json { render :json => @puzzle }
+    end
   end
 
   # PATCH/PUT /puzzles/1
@@ -75,7 +66,9 @@ class PuzzlesController < ApplicationController
       @puzzle.image = params[:file]
     end
     @puzzle.save
-    respond_with(@puzzle)
+    respond_to do |format|
+      format.json { render :json => @puzzle }
+    end
   end
 
   # DELETE /puzzles/1

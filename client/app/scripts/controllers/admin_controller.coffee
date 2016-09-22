@@ -12,5 +12,10 @@ angular.module 'puzzles'
 
   angular.extend this, $controller 'BaseController', $scope:$scope
 
+  $scope.calculateCurrentScores = () ->
+    PuzzleWebService.calculateCurrentScores().then(
+
+    )
+
 
 

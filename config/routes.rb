@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :user_scores
   root to: 'application#angular'
 
   scope 'api' do
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
     put 'answers/update/:id' =>'answers#update', defaults: {format: :json}
     patch 'puzzles/calculate/:id' => 'puzzles#calculate_and_save_score', defaults: {format: :json}
     get 'answers/getUserAnswer/:puzzle_id' => 'answers#get_user_answer', defaults: {format: :json}
+    put 'puzzles/update/:id' =>'puzzles#update', defaults: {format: :json}
+    get 'user_scores/calculateScores' => 'user_scores#calculate_user_scores', defaults: {format: :json}
     resources :votes, defaults: {format: :json}
     resources :comments, defaults: {format: :json}
     resources :answers, defaults: {format: :json}

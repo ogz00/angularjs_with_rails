@@ -16,7 +16,7 @@ angular.module('puzzles').factory 'PuzzleWebService', (RequestService) ->
     RequestService.post 'puzzles', puzzle
 
   PuzzleWebService.update = (puzzle) ->
-    RequestService.patch 'puzzles', puzzle, puzzle.id
+    RequestService.put 'puzzlesUpdate', puzzle, puzzle.id
 
 
   PuzzleWebService.delete = (id) ->
@@ -37,6 +37,9 @@ angular.module('puzzles').factory 'PuzzleWebService', (RequestService) ->
 
   PuzzleWebService.calculateScoresForSelected = (puzzleIds) ->
     RequestService.patch 'calculatePuzzleScores', puzzleIds, null
+
+  PuzzleWebService.calculateCurrentScores = () ->
+    RequestService.get null, 'calculateUserScores'
 
 
   PuzzleWebService
