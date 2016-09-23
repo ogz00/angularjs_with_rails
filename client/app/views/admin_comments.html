@@ -3,11 +3,11 @@
     <h1><label class="label label-info">Click Puzzle Name For Manage Comments</label></h1>
     <div class="row">
       <accordion close-others="true">
-        <div accordion-group ng-click="showCommentsForPuzzle(puzzle.id)" class="panel-default"
+        <div accordion-group class="panel-default"
              ng-repeat="puzzle in puzzles" is-open="puzzle.open">
           <accordion-heading>
-            <label class="label label-primary">{{puzzle.name}}</label>
-            <i class="pull-right glyphicon"
+            <label class="label label-primary" ng-click="showCommentsForPuzzle(puzzle.id)">{{puzzle.name}}</label>
+            <i class="pull-right glyphicon" ng-click="showCommentsForPuzzle(puzzle.id)"
                ng-class="{'glyphicon-chevron-down': puzzle.open, 'glyphicon-chevron-right': !puzzle.open}"></i>
           </accordion-heading>
 

@@ -44,9 +44,13 @@ class CommentsController < ApplicationController
     @comment.publish = false
     @comment.user_id = current_user.id
     if @comment.save
-      respond_with(@comment)
+      respond_to do |format|
+        format.json { render :json => @comment }
+      end
     else
-      respond_with(@comment.errors)
+      respond_to do |format|
+        format.json { render :json => @comment.errors }
+      end
     end
   end
 
@@ -54,10 +58,8 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     @comment.update(comment_params)
-    if @comment.save
-      respond_with(@comment)
-    else
-      respond_with(@comment.errors)
+    respond_to do |format|
+      format.json { render :json => @comment }
     end
   end
 
@@ -81,4 +83,5 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:puzzle_id, :user_id, :subject, :message, :publish, :isCommentTop)
   end
+
 end

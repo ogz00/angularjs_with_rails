@@ -52,6 +52,7 @@ class PuzzlesController < ApplicationController
   def create
     @puzzle = Puzzle.new(puzzle_params)
     @puzzle.image = params[:file]
+    @puzzle.score = 100
     @puzzle.save
     respond_to do |format|
       format.json { render :json => @puzzle }
