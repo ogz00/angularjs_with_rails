@@ -13,8 +13,11 @@ angular.module('puzzles').factory 'ScoreWebService', (RequestService) ->
   ScoreWebService = {}
 
 
-  ScoreWebService.calculateUsersCurrentScores = () ->
-    RequestService.get null, 'calculateUserScores'
+  ScoreWebService.calculateUsersScores = () ->
+    RequestService.get null, 'calculateUsersScores'
+
+  ScoreWebService.calculateTabledScores = (puzzleIds) ->
+    RequestService.post 'calculateTabledScores', puzzleIds
 
 
   ScoreWebService

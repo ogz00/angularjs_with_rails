@@ -97,6 +97,10 @@ angular
     url: '/admin/scores',
     templateUrl: '../views/admin_current_scores.html'
     controller: 'AdminUserScoresController'
+  .state 'adminTabledScores',
+    url: '/admin/tabledScores',
+    templateUrl: '../views/tabled_user_scores.html'
+    controller: 'AdminUserScoresController'
 
   localStorageServiceProvider.setPrefix 'puzzles'
 

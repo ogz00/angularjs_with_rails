@@ -33,7 +33,7 @@ angular.module('puzzles').factory 'PuzzleWebService', (RequestService) ->
     RequestService.patch 'calculatePuzzleScore', id, id
 
   PuzzleWebService.calculateAllScores = () ->
-    RequestService.patch 'calculatePuzzleScores'
+    RequestService.patch 'calculateAllPuzzleScore'
 
   PuzzleWebService.calculateScoresForSelected = (puzzleIds) ->
     RequestService.patch 'calculatePuzzleScores', puzzleIds, null

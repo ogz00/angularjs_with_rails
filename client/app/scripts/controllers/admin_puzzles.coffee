@@ -71,6 +71,18 @@ angular.module 'puzzles'
         onErrorCalculate(error)
     )
 
+  $scope.calculateAllScores = () ->
+    PuzzleWebService.calculateAllScores().then(
+      (puzzles) ->
+        $log.info 'puzzles: ', puzzles
+        $scope.puzzles = puzzles
+        return
+      (error) ->
+        $log.error 'puzzles error: ', error
+        $scope.showErrorNotification error
+        return
+    )
+
   onSuccessCalculate = (score, puzzle) ->
     puzzle.score = score
     $log.info 'score: ', score
@@ -84,5 +96,5 @@ angular.module 'puzzles'
 
 
 
-  getPuzzles()
+  $scope.calculateAllScores()
 

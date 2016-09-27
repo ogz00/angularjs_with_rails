@@ -1,0 +1,1 @@
+json.array! @tabled_user_scores, partial: 'tabled_user_scores/tabled_user_score', as: :tabled_user_score

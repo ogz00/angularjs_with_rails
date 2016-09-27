@@ -1,0 +1,1 @@
+json.partial! "tabled_user_scores/tabled_user_score", tabled_user_score: @tabled_user_score

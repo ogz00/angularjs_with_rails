@@ -23,8 +23,10 @@ angular.module('puzzles').provider 'APIUrls', ->
     adminComments: 'comments/admin'
     currentVotes: 'votes/current'
     calculatePuzzleScore: 'puzzles/calculate'
+    calculateAllPuzzleScore: 'puzzles/calculateAll'
     getUserAnswer: 'answers/getUserAnswer'
-    calculateUserScores: 'user_scores/calculateScores'
+    calculateUsersScores: 'user_scores/calculateScores'
+    calculateTabledScores: 'user_scores/calculateTabledScores'
   # Private constructor
 
   APIUrls = ->

@@ -8,11 +8,11 @@
  # Controller of the puzzles
 ###
 angular.module 'puzzles'
-.controller 'AdminUserScoresController', ($scope, $controller, $log, $modal, ScoreWebService) ->
+.controller 'AdminUserScoresController', ($scope, $controller, $log, $state, $filter, $modal, ScoreWebService, PuzzleWebService) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
 
   calculateAllScores = ()->
-    ScoreWebService.calculateUsersCurrentScores().then(
+    ScoreWebService.calculateUsersScores().then(
       (userScores) ->
         $log.info 'userScores: ', userScores
         $scope.userScores = userScores
@@ -24,9 +24,37 @@ angular.module 'puzzles'
         return
     )
 
-
-
-  calculateAllScores()
+  if($state.current.name == 'adminScores')
+    calculateAllScores()
 
   $scope.refresh = () ->
     calculateAllScores()
+
+  getPuzzles = ->
+    PuzzleWebService.getCurrent().then(
+      (puzzles) ->
+        $scope.puzzles = puzzles
+        $scope.selectedPuzzles()
+        $log.info $scope.puzzles
+    )
+
+  $scope.selectedPuzzles = ()->
+    $scope.puzzleList = $filter('filter')($scope.puzzles, {isTabled: true})
+
+  if($state.current.name == 'adminTabledScores')
+    getPuzzles()
+
+  $scope.getTabledUserScores = ()->
+    puzzleIdList = $scope.puzzleList.map((puzzle) ->
+      return puzzle.id
+    )
+
+    ScoreWebService.calculateTabledScores({puzzleIds: puzzleIdList}).then(
+      (scoreList)->
+        $log.info "score list: ", scoreList
+        $scope.scores = scoreList
+      (error) ->
+        $log.error "score list: error", error
+    )
+
+  #$scope.getTabledUserScores()

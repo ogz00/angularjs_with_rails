@@ -13,6 +13,15 @@ module PuzzlesHelper
   end
 
 
+  def self.admin
+    year = Time.now.year
+
+    Puzzle
+        .where('year = ?', year)
+        .order('no DESC')
+  end
+
+
   def self.calculate_score(puzzleId)
     right_answer = Puzzle.right_answers(puzzleId)
     total_answer = Puzzle.total_answers(puzzleId)

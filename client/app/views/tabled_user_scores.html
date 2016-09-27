@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-sm-5">
+    <div class="row">
+      <div class="col-xs-9">
+        <h4>TABLED PUZZLES</h4>
+      </div>
+      <div class="col-xs-2">
+        <button class="btn btn-primary" ng-click="getTabledUserScores()"> Calculate</button>
+      </div>
+    </div>
+    <table class="table table-responsive table-bordered">
+      <thead>
+      <tr>
+        <th>Choose
+        </th>
+        <th>Puzzle Name
+        </th>
+        <th>Score
+        </th>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="puzzle in puzzles | orderBy:'no'">
+        <td class="col-md-1">
+          <input type="checkbox" name="{{puzzle.name}}" id="{{puzzle.id}}" ng-model="puzzle.isTabled"
+                 ng-change="selectedPuzzles()">
+        </td>
+        <td class="col-md-7">
+          <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"> {{puzzle.name}}</a>
+        </td>
+        <td class="col-md-1">
+          <label>{{puzzle.score}}</label>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4>User Scores</h4>
+      </div>
+    </div>
+    <table class="table table-responsive table-bordered">
+      <thead>
+      <tr>
+        <th>User Name
+        </th>
+        <th>Score
+        </th>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="score in scores | orderBy:'no'">
+        <td class="col-md-7">
+          <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"> {{score.user.firstName}}</a>
+        </td>
+        <td class="col-md-1">
+          <label>{{score.tabledScore}}</label>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

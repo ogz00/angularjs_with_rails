@@ -20,6 +20,24 @@ class PuzzlesController < ApplicationController
     end
   end
 
+  def calculate_and_update_all_scores
+
+    @puzzles = PuzzlesHelper.admin
+    @puzzles.each do |puzzle|
+      current_score = PuzzlesHelper.calculate_score(puzzle.id)
+      if current_score >= 0
+        puzzle.score = current_score
+        puzzle.save
+      else
+        puzzle.score = 100
+        puzzle.save
+      end
+    end
+    respond_to do |format|
+      format.json { render :json => PuzzlesHelper.admin }
+    end
+  end
+
   # GET /puzzles
   # GET /puzzles.json
   def index

@@ -43,6 +43,7 @@ angular.module('puzzles').factory 'RequestService', ($http,$resource, $q, $contr
     if params
 #      params=Object.removeNullsAndEmpties(params, Object.keys(params))
       params = Object.toUnderscoreKeys(params)
+      console.log("PARAMS:" , params)
 
     config = getConfig(requestMethod, url, params)
 

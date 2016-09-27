@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tabled_user_score.user %>
+</p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @tabled_user_score.score %>
+</p>
+
+<%= link_to 'Edit', edit_tabled_user_score_path(@tabled_user_score) %> |
+<%= link_to 'Back', tabled_user_scores_path %>

@@ -1,0 +1,2 @@
+module TabledUserScoresHelper
+end

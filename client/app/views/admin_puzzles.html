@@ -1,30 +1,34 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="row">
-      <div class="col-sm-6">
-        <h4>Puzzles</h4>
+      <h4>Puzzles</h4>
+      <div class="col-xs-10">
+        <button class="btn btn-primary" ng-click="addPuzzle()"> Create New Puzzle</button>
       </div>
-      <div class="col-sm-6">
-        <button class="btn btn-success pull-right" ng-click="addPuzzle()"> Add Puzzle</button>
+      <div class="col-xs-2">
+        <button class="btn btn-info" ng-click="calculateAllScores()"> Calculate All Scores</button>
       </div>
     </div>
-    <table class="table table-responsive table-bordered">
+    <table class="table table-responsive table-bordered" style="margin-top:10px">
       <thead>
       <tr>
+        <th>Puzzle No
+        </th>
         <th>Puzzle Name
         </th>
         <th>Score
         </th>
-        <th>Calculate
+        <th>isPublished
         </th>
         <th>Edit
-        </th>
-        <th>Delete
         </th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="puzzle in puzzles | orderBy:'no'">
+        <td class="col-md-1">
+          {{puzzle.no}}
+        </td>
         <td class="col-md-7">
           <a ui-sref="admin.puzzle({puzzleId:puzzle.id})"> {{puzzle.name}}</a>
         </td>
@@ -32,14 +36,10 @@
           <label>{{puzzle.score}}</label>
         </td>
         <td class="col-md-1">
-          <button class="btn btn-primary" ng-click="calculateScore(puzzle)"><i class="fa fa-cogs"></i>
-          </button>
+          <label>{{puzzle.publish}}</label>
         </td>
         <td class="col-md-1">
           <a href class="" ng-click="addPuzzle(puzzle)"><i class="fa fa-2x fa-pencil"></i></a>
-        </td>
-        <td class="col-md-1">
-          <a href class="" ng-click="deletePuzzle(puzzle)"><i class="fa fa-2x fa-trash-o"></i></a>
         </td>
       </tr>
       </tbody>
