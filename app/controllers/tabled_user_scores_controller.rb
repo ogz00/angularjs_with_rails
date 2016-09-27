@@ -1,5 +1,5 @@
 class TabledUserScoresController < ApplicationController
-  before_action :set_tabled_user_score, only: [:show, :edit, :update, :destroy]
+  before_action :set_tabled_user_score, only: [:show, :edit, :update]
 
   # GET /tabled_user_scores
   # GET /tabled_user_scores.json
@@ -21,20 +21,25 @@ class TabledUserScoresController < ApplicationController
   def edit
   end
 
+  def delete_all
+    TabledUserScore.delete_all
+  end
+
   # POST /tabled_user_scores
   # POST /tabled_user_scores.json
   def create
-    @tabled_user_score = TabledUserScore.new(tabled_user_score_params)
+    puts "AAAAASDASDSADASDASDASDASDSAD: #{params}"
+    @tabled_user_score_params = params[:tabled_user_scores]
+    @tabled_user_score_params.each do |tabled_user_score_param|
+      puts "22AAAAASDASDSADASDASDASDASDSAD: #{tabled_user_score_param[:user_id]},  #{tabled_user_score_param[:tabled_score]}"
 
-    respond_to do |format|
-      if @tabled_user_score.save
-        format.html { redirect_to @tabled_user_score, notice: 'Tabled user score was successfully created.' }
-        format.json { render :show, status: :created, location: @tabled_user_score }
-      else
-        format.html { render :new }
-        format.json { render json: @tabled_user_score.errors, status: :unprocessable_entity }
-      end
+      @tabled_user_score = TabledUserScore.new(:user_id => tabled_user_score_param[:user_id], :score => tabled_user_score_param[:tabled_score] )
+      @tabled_user_score.save
     end
+    respond_to do |format|
+      format.json { render :json => @tabled_user_scores }
+    end
+
   end
 
   # PATCH/PUT /tabled_user_scores/1
@@ -62,13 +67,13 @@ class TabledUserScoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tabled_user_score
-      @tabled_user_score = TabledUserScore.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tabled_user_score
+    @tabled_user_score = TabledUserScore.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tabled_user_score_params
-      params.require(:tabled_user_score).permit(:user_id, :score)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tabled_user_score_params
+    params.require(:tabled_user_score).permit(:user_id, :score)
+  end
 end

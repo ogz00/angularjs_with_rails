@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :comments, defaults: {format: :json}
     resources :answers, defaults: {format: :json}
     resources :puzzles, defaults: {format: :json}
+    resources :tabled_user_scores, defaults: {format: :json}
 
   end
 

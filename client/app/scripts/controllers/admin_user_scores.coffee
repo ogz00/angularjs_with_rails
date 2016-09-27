@@ -57,4 +57,16 @@ angular.module 'puzzles'
         $log.error "score list: error", error
     )
 
+  $scope.publishTabledUserScores = () ->
+    tabledUserScores = $scope.scores
+#    for i in [0 ...$scope.scores.length]
+#      tabledUserScores[i] = $scope.scores[i]
+
+    console.log tabledUserScores
+    ScoreWebService.publishTabledScores({tabled_user_scores: tabledUserScores}).then(
+
+    )
+
+
+
   #$scope.getTabledUserScores()

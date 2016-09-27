@@ -19,5 +19,8 @@ angular.module('puzzles').factory 'ScoreWebService', (RequestService) ->
   ScoreWebService.calculateTabledScores = (puzzleIds) ->
     RequestService.post 'calculateTabledScores', puzzleIds
 
+  ScoreWebService.publishTabledScores = (userScores) ->
+    RequestService.post 'tabledUserScores', userScores
+
 
   ScoreWebService
