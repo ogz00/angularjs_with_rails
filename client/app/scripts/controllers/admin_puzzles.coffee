@@ -11,18 +11,6 @@ angular.module 'puzzles'
 .controller 'AdminPuzzlesController', ($scope, $controller, $log, $modal, PuzzleWebService) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
 
-  getPuzzles = ()->
-    PuzzleWebService.getPuzzles().then(
-      (puzzles) ->
-        $log.info 'puzzles: ', puzzles
-        $scope.puzzles = puzzles
-        return
-      (error) ->
-        $log.error 'puzzles error: ', error
-        $scope.showErrorNotification error
-        return
-    )
-
 
   $scope.addPuzzle = (puzzle) ->
     modalInstance = $modal.open
@@ -54,22 +42,22 @@ angular.module 'puzzles'
     )
     return
 
-  $scope.deletePuzzle = (puzzle) ->
-    $scope.delete(puzzle.id, PuzzleWebService.delete).then(
-      () ->
-        for a, i in $scope.puzzles
-          if a.id == puzzle.id
-            $scope.puzzles.splice(i,1)
-      () ->
-    )
+#  $scope.deletePuzzle = (puzzle) ->
+#    $scope.delete(puzzle.id, PuzzleWebService.delete).then(
+#      () ->
+#        for a, i in $scope.puzzles
+#          if a.id == puzzle.id
+#            $scope.puzzles.splice(i,1)
+#      () ->
+#    )
 
-  $scope.calculateScore = (puzzle) ->
-    PuzzleWebService.calculateScore(puzzle.id).then(
-      (result) ->
-        onSuccessCalculate(result, puzzle)
-      (error) ->
-        onErrorCalculate(error)
-    )
+#  $scope.calculateScore = (puzzle) ->
+#    PuzzleWebService.calculateScore(puzzle.id).then(
+#      (result) ->
+#        onSuccessCalculate(result, puzzle)
+#      (error) ->
+#        onErrorCalculate(error)
+#    )
 
   $scope.calculateAllScores = () ->
     PuzzleWebService.calculateAllScores().then(

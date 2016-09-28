@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
     render parameters.merge(content_type: 'application/json', text: ")]}',\n" + object.to_json)
   end
 
+  def getYear
+    Time.now.year
+  end
+
   protected
   # In Rails 4.2 and above
   def verified_request?

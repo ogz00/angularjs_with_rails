@@ -22,5 +22,8 @@ angular.module('puzzles').factory 'ScoreWebService', (RequestService) ->
   ScoreWebService.publishTabledScores = (userScores) ->
     RequestService.post 'tabledUserScores', userScores
 
+  ScoreWebService.getTabledScores = () ->
+    RequestService.get null, 'tabledUserScores'
+
 
   ScoreWebService

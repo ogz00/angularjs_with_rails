@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module 'puzzles'
-.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, $state, Auth, PuzzleWebService, CommentWebService, VoteWebService, AnswerWebService) ->
+.controller 'HomeController', ($rootScope, $scope, $controller, $http, $modal, $log, $state, Auth, PuzzleWebService, CommentWebService, VoteWebService, AnswerWebService, ScoreWebService) ->
   angular.extend this, $controller 'BaseController', $scope: $scope
   $rootScope.$state = $state;
   Auth.currentUser().then(
@@ -15,8 +15,8 @@ angular.module 'puzzles'
   getPuzzles = ->
     PuzzleWebService.getCurrent().then(
       (puzzles) ->
+        $log.info "puzzles: ", puzzles
         $scope.puzzles = puzzles
-        $log.info $scope.puzzles
         getComments()
     )
 
@@ -61,18 +61,6 @@ angular.module 'puzzles'
 
   $scope.comments = []
 
-
-  getUsers = () ->
-    url = 'http://jsonplaceholder.typicode.com/users'
-    $http.get(url).then(
-      (response) ->
-        console.log('response ' + response)
-        $scope.users = response.data
-    )
-
-
-  getUsers()
-
   $scope.changePuzzle = () ->
     $scope.userAnswer = null
     getComments()
@@ -107,7 +95,6 @@ angular.module 'puzzles'
       answered =
         answer: currentPuzzle.answer
         puzzle_id: currentPuzzle.id
-      $log.info "answered: ", answered
       if $scope.userAnswer == null
         AnswerWebService.create({answered: answered}).then(
           (result) ->
@@ -134,7 +121,6 @@ angular.module 'puzzles'
 
   onAnswerSuccess = (answer) ->
     $scope.userAnswer = answer
-    $log.info 'answer: ', answer
     $scope.actionOnSuccess(true, 'answer creation is successfull')
 
 
@@ -148,9 +134,36 @@ angular.module 'puzzles'
         if(answer.length > 0)
           $scope.userAnswer = answer[0]
           $scope.puzzles[$scope.selected.value].answer = $scope.userAnswer.answer
-          $log.info 'user answer: ' + $scope.userAnswer
         else
           $scope.userAnswer = null
       (error) ->
         $scope.userAnswer = null
     )
+
+  getPublishedScores = () ->
+    ScoreWebService.getTabledScores().then(
+      (result) ->
+        $scope.tabledScores = result
+      (error) ->
+       $log.error(error)
+    )
+
+  getPublishedScores()
+
+  $scope.findPuzzle = (puzzleId) ->
+    for i in [0 ...$scope.puzzles.length]
+      if(puzzleId == $scope.puzzles[i].id)
+        $scope.selected.value = i
+        $scope.changePuzzle()
+
+
+  getPopularities = () ->
+    VoteWebService.getPopularities().then(
+      (result) ->
+        $scope.popularities = result
+      (error) ->
+        $log.error(error)
+    )
+
+  getPopularities()
+

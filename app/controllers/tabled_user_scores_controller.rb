@@ -1,10 +1,16 @@
 class TabledUserScoresController < ApplicationController
   before_action :set_tabled_user_score, only: [:show, :edit, :update]
+  before_action :delete_all , only: [:create]
+
+  respond_to :json
 
   # GET /tabled_user_scores
   # GET /tabled_user_scores.json
   def index
     @tabled_user_scores = TabledUserScore.all
+    respond_to do |format|
+      format.json { render :json => @tabled_user_scores }
+    end
   end
 
   # GET /tabled_user_scores/1
@@ -28,11 +34,8 @@ class TabledUserScoresController < ApplicationController
   # POST /tabled_user_scores
   # POST /tabled_user_scores.json
   def create
-    puts "AAAAASDASDSADASDASDASDASDSAD: #{params}"
     @tabled_user_score_params = params[:tabled_user_scores]
     @tabled_user_score_params.each do |tabled_user_score_param|
-      puts "22AAAAASDASDSADASDASDASDASDSAD: #{tabled_user_score_param[:user_id]},  #{tabled_user_score_param[:tabled_score]}"
-
       @tabled_user_score = TabledUserScore.new(:user_id => tabled_user_score_param[:user_id], :score => tabled_user_score_param[:tabled_score] )
       @tabled_user_score.save
     end

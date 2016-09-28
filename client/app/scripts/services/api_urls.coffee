@@ -15,6 +15,7 @@ angular.module('puzzles').provider 'APIUrls', ->
     puzzles: 'puzzles'
     comments: 'comments'
     votes: 'votes'
+    getPopularities : 'votes/getPopularities'
     answers: 'answers'
     tabledUserScores: 'tabled_user_scores'
     answersUpdate: 'answers/update'

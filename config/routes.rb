@@ -8,14 +8,17 @@ Rails.application.routes.draw do
   scope 'api' do
     devise_for :users, controllers: {sessions: 'users/sessions'}, defaults: {format: :json}
     get 'puzzles/current', defaults: {format: :json}
+    put 'puzzles/update/:id' =>'puzzles#update', defaults: {format: :json}
+    patch 'puzzles/calculate/:id' => 'puzzles#calculate_and_save_score', defaults: {format: :json}
+    patch 'puzzles/calculateAll' => 'puzzles#calculate_and_update_all_scores', defaults: {format: :json}
+
     get 'comments/current', defaults: {format: :json}
     get 'comments/admin', defaults: {format: :json}
     get 'votes/current', defaults: {format: :json}
+    get 'votes/getPopularities' => 'votes#get_popularities', defaults: {format: :json}
+
     put 'answers/update/:id' =>'answers#update', defaults: {format: :json}
-    patch 'puzzles/calculate/:id' => 'puzzles#calculate_and_save_score', defaults: {format: :json}
-    patch 'puzzles/calculateAll' => 'puzzles#calculate_and_update_all_scores', defaults: {format: :json}
     get 'answers/getUserAnswer/:puzzle_id' => 'answers#get_user_answer', defaults: {format: :json}
-    put 'puzzles/update/:id' =>'puzzles#update', defaults: {format: :json}
     get 'user_scores/calculateScores' => 'user_scores#calculate_scores', defaults: {format: :json}
     post 'user_scores/calculateTabledScores' => 'user_scores#calculate_tabled_scores', defaults: {format: :json}
 

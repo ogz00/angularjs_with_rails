@@ -22,11 +22,14 @@ angular.module('puzzles').factory 'VoteWebService', (RequestService) ->
   VoteWebService.delete = (id) ->
     RequestService.delete 'votes', id
 
-  VoteWebService.getComments = () ->
+  VoteWebService.getVotes = () ->
     RequestService.get null, 'votes'
 
   VoteWebService.getCurrent = (params) ->
     RequestService.get params, 'currentVotes'
+
+  VoteWebService.getPopularities = () ->
+    RequestService.get null, 'getPopularities'
 
 
   VoteWebService

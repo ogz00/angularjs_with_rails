@@ -17,6 +17,12 @@ class VotesController < ApplicationController
     end
   end
 
+  # GET /votes/get_popularities.json
+  def get_popularities
+    @pops = VotesHelper.popularity_all_puzzles
+    respond_with @pops
+  end
+
   # GET /votes
   # GET /votes.json
   def index
@@ -45,11 +51,9 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
-        format.json { render :show, status: :created, location: @vote }
+        format.json { render :json => @vote }
       else
-        format.html { render :new }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
+        format.json { render :json => @vote.errors}
       end
     end
   end

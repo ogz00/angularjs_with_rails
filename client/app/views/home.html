@@ -4,146 +4,176 @@
     <span ng-if="!loading" class="not-loading">Done Loading</span>
   </aside>
 
-    <div class="col-xs-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Messages from PuzzleUp</h3>
-        </div>
-        <div class="panel-body">
-          <p>Welcome to the PuzzleUp; a problem and games site where each week a different problem is put accross for
-            you
-            to think on and try to solve.</p>
+  <div class="col-xs-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Messages from PuzzleUp</h3>
+      </div>
+      <div class="panel-body">
+        <p>Welcome to the PuzzleUp; a problem and games site where each week a different problem is put accross for
+          you
+          to think on and try to solve.</p>
 
-          <p>The fundamental aim of this site is to support and raise persons of the information age who have highly
-            developed capabilities of thinking, perceiving and problem solving and who are able to interpret different
-            cultures and contribute to contemporary civilisation.</p>
+        <p>The fundamental aim of this site is to support and raise persons of the information age who have highly
+          developed capabilities of thinking, perceiving and problem solving and who are able to interpret different
+          cultures and contribute to contemporary civilisation.</p>
 
-          <p>To keep us on track and give us direction we look forward to hearing your criticisms and suggestions.</p>
+        <p>To keep us on track and give us direction we look forward to hearing your criticisms and suggestions.</p>
 
-          <p>Hoping that wisdom, peace and love will master the future of the world we live in.</p>
+        <p>Hoping that wisdom, peace and love will master the future of the world we live in.</p>
 
-          <p>Emrehan Halici</p>
+        <p>Emrehan Halici</p>
 
-        </div>
       </div>
     </div>
-    <div class="col-xs-6">
-      <!--QUESTION PANEL -->
-      <div class="panel panel-default main-puzzle-panel">
+  </div>
+  <div class="col-xs-6">
+    <!--QUESTION PANEL -->
+    <div class="panel panel-default main-puzzle-panel">
 
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ puzzles[selected.value].publishDate | date:'yyyy-MMMM-dd' }}
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ puzzles[selected.value].publishDate | date:'yyyy-MMMM-dd' }}
 
-            <span class="pull-right">No: {{ puzzles[selected.value].no }}</span>
-          </h3>
-        </div>
-        <div class="panel-body">
+          <span class="pull-right">No: {{ puzzles[selected.value].no }}</span>
+        </h3>
+      </div>
+      <div class="panel-body">
 
-          <!--NEXT AND PREV BUTTONS AREA -->
-          <span class="pull-right" style="font-size: large">
-            <a href="" ng-click="selected.value = selected.value + 1; changePuzzle()" ng-show="selected.value < puzzles.length -1">
+        <!--NEXT AND PREV BUTTONS AREA -->
+        <span class="pull-right" style="font-size: large">
+            <a href="" ng-click="selected.value = selected.value + 1; changePuzzle()"
+               ng-show="selected.value < puzzles.length -1">
               next&rarr;
               </a>
 
           </span>
-          <span class="pull-left">
+        <span class="pull-left">
             <a href="" ng-click="selected.value= selected.value - 1; changePuzzle()" ng-show="selected.value >= 1">
               &larr;prev</a>
           </span>
 
-          <!--QUESTION NAME AND QUESTION AREA -->
-          <h3>
-            {{ puzzles[selected.value].name }}
-          </h3>
-          <h4 ng-bind-html="puzzles[selected.value].question"></h4>
-          <!-- IMAGE AREA -->
-          <td><img  ng-show="puzzles[selected.value].imageFileName" ng-src="{{puzzles[selected.value].image}}"
-                    alt="Puzzle Image" class="img-responsive"/></td>
+        <!--QUESTION NAME AND QUESTION AREA -->
+        <h3>
+          {{ puzzles[selected.value].name }}
+        </h3>
+        <h4 ng-bind-html="puzzles[selected.value].question"></h4>
+        <!-- IMAGE AREA -->
+        <td><img ng-show="puzzles[selected.value].imageFileName" ng-src="{{puzzles[selected.value].image}}"
+                 alt="Puzzle Image" class="img-responsive"/></td>
 
-          <div ng-show="signedIn()" class="form-group">
-            <label for="answer">Answer</label>
-            <input class="form-control" type="text" name='answer' id='answer' placeholder="answer"
-                   ng-model="puzzles[selected.value].answer"/>
-          </div>
-          <small ng-show="userAnswer">Your last answer for this question is : {{userAnswer.answer}}</small>
-          <button  ng-show="signedIn()" class="btn btn-primary pull-right" ng-click="sendAnswer()"
-                   ng-disabled="!puzzles[selected.value].answer">Send</button>
-          <div ng-hide="signedIn()" class="col-xs-8 col-xs-offset-2">
+        <div ng-show="signedIn()" class="form-group">
+          <label for="answer">Answer</label>
+          <input class="form-control" type="text" name='answer' id='answer' placeholder="answer"
+                 ng-model="puzzles[selected.value].answer"/>
+        </div>
+        <div class="col-sm-12">
+          <medium ng-show="userAnswer">Your last answer for this question is : {{userAnswer.answer}}</medium>
+          <small ng-show="userAnswer" class="label label-danger col-xs-9"> If you change your answer your bonus will calculate again</small>
+        </div>
+        <button ng-show="signedIn()" class="btn btn-primary pull-right" ng-click="sendAnswer()"
+                ng-disabled="!puzzles[selected.value].answer">Send
+        </button>
+        <div ng-hide="signedIn()" class="col-xs-8 col-xs-offset-2">
             <span style="font-weight: 600">[ You need to be a member of this site
             before you can submit an answer ]</span>
-          </div>
-
-          <div class="col-sm-12" style="margin-top: 12px;">
-            <medium class="pull-left">Popularity: <span>{{votes[0]}}</span></medium>
-            <medium class="pull-right">Difficulty: <span>{{votes[1]}}</span></medium>
-          </div>
-          <div class="col-sm-12 text-center" style="margin-top: 12px;">
-            <medium>Today's Bonus Point: <span style="font-weight: 600">{{puzzles[selected.value].bonus}}</span></medium>
-          </div>
-          <span class="glyphicons glyphicons-chevron-right"></span>
-
         </div>
+
+        <div class="col-sm-12" style="margin-top: 12px;">
+          <medium class="pull-left">Popularity: <span>{{votes[0]}}</span></medium>
+          <medium class="pull-right">Difficulty: <span>{{votes[1]}}</span></medium>
+        </div>
+        <div class="col-sm-12 text-center" style="margin-top: 12px;">
+          <medium>Today's Bonus Point: <span style="font-weight: 600">{{puzzles[selected.value].bonus}}</span></medium>
+        </div>
+        <span class="glyphicons glyphicons-chevron-right"></span>
+
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading" ng-click="addComment(puzzles[selected.value])" ng-show="signedIn()">
-          <h3 class="panel-title">Comments<span style="cursor: pointer" class="pull-right">Add Comment</span></h3>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" ng-click="addComment(puzzles[selected.value])" ng-show="signedIn()">
+        <h3 class="panel-title">Comments<span style="cursor: pointer" class="pull-right">Add Comment</span></h3>
 
-        </div>
-        <div class="panel-body">
-          <ol>
-            <li ng-repeat="comment in comments" class="list-comments">
-              <div class="panel">
-                <div class="panel panel-title">
-                  <span class="col-xs-12">{{comment.subject}} </span>
-                </div>
-                <div class="panel comment-body">
-                  {{comment.message}}
-                </div>
-                <div class="panel comment-footer col-xs-12">
-                  <label class="pull-right comment-date">{{comment.createdAt | date:'dd-MM-yyyy HH:mm'}}</label>
-                  <label class="pull-left comment-name">{{comment.user.username}}</label>
-
-                </div>
+      </div>
+      <div class="panel-body">
+        <ol>
+          <li ng-repeat="comment in comments | orderBy: 'createdAt'" class="list-comments">
+            <div class="panel">
+              <div class="panel panel-title">
+                <span class="col-xs-12">{{comment.subject}} </span>
               </div>
-
-            </li>
-          </ol>
-
-
-        </div>
+              <div class="panel comment-body">
+                {{comment.message}}
+              </div>
+              <div class="panel comment-footer col-xs-12">
+                <label class="pull-right comment-date">{{comment.createdAt | date:'dd-MM-yyyy HH:mm'}}</label>
+                <label class="pull-left comment-name">{{comment.user.username}}</label>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
-
     </div>
-    <div class="col-xs-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Top 10 - Competitors</h3>
-        </div>
-        <div class="panel-body">
-          <ol>
-            <li ng-repeat="user in users">
-              {{user.name}} <span class="pull-right">400</span>
-            </li>
-          </ol>
-        </div>
-      </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Top 10 - Puzzles</h3>
-        </div>
-        <div class="panel-body">
-          <ol>
-            <li ng-repeat="puzzle in puzzles | limitTo:10">
-              <span>{{puzzle.name | limitTo: 18 }}</span>
-              <span class="pull-right">90</span>
-            </li>
-          </ol>
-        </div>
-      </div>
+  </div>
+  <div class="col-xs-3">
+    <table class="table table-responsive table-bordered" style="margin-top:10px; font-size: 12px; z-index: 1000;">
+      <caption> Top 10 - Competitors (Score)</caption>
+      <thead>
+      <tr>
+        <th class="col-md-1">Order
+        </th>
+        <th class="col-md-11">User Name
+        </th>
+        <th class="col-md-1">
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="score in tabledScores | orderBy: '-score' | limitTo : 10">
+        <td class="col-xs-0">
+          {{$index+1}}
+        </td>
+        <td class="col-xs-10">
+          <label><span>{{score.user.firstName}} </span>{{score.user.lastName}}</label>
+        </td>
+        <td class="col-xs-1">
+          <label>{{score.score}}</label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
 
-    </div>
+    <table class="table table-responsive table-bordered" style="margin-top:10px; font-size: 12px;">
+      <caption> Top 10 - Puzzles (Popularity)</caption>
+      <thead>
+      <tr>
+        <th class="col-md-1">Order
+        </th>
+        <th class="col-md-11">Puzzle Name
+        </th>
+        <th class="col-md-1">
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="puzzle in popularities | orderBy:'-popularity'">
+        <td class="col-md-1">
+          {{$index+1}}
+        </td>
+        <td class="col-md-11">
+          <a ng-click="findPuzzle(puzzle.id)" style="cursor: pointer">{{puzzle.name | limitTo:15}} <span
+            ng-show="puzzle.name.length > 15">...</span></a>
+        </td>
+        <td class="col-md-1">
+          <label>{{puzzle.popularity | limitTo:4}}</label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+  </div>
 
 </section>
