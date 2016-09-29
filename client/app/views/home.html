@@ -57,10 +57,10 @@
         <h3>
           {{ puzzles[selected.value].name }}
         </h3>
-        <h4 ng-bind-html="puzzles[selected.value].question"></h4>
         <!-- IMAGE AREA -->
-        <td><img ng-show="puzzles[selected.value].imageFileName" ng-src="{{puzzles[selected.value].image}}"
-                 alt="Puzzle Image" class="img-responsive"/></td>
+        <img ng-show="puzzles[selected.value].imageFileName" ng-src="{{puzzles[selected.value].image}}"
+             alt="Puzzle Image" class="img-responsive"/>
+        <h4 ng-bind-html="puzzles[selected.value].question"></h4>
 
         <div ng-show="signedIn()" class="form-group">
           <label for="answer">Answer</label>
