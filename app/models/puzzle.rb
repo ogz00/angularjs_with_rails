@@ -1,9 +1,8 @@
 class Puzzle < ActiveRecord::Base
   has_attached_file :image,
-                    styles: {
-                        square: '200x200#',
-                        medium: '300x300>'
-                    }
+                    :bucket => ENV['S3_BUCKET_NAME'],
+                    :path => "/u:idh:hash.:extension",
+                    :hash_secret => 'dTVArLgWHP4pdXGSN6XF4S8cfkYWjPwQ6Wkq8yt'
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   has_many :comments, :dependent => :delete_all
