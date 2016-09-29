@@ -22,8 +22,9 @@ module VotesHelper
     year = Time.now.year
     @puzzle_popularity = []
     @puzzles = Puzzle.where(:year => year)
+                   .where(:publish => true)
     @puzzles.each do |puzzle|
-      popularity =  Vote.average_by_popularity(puzzle.id)
+      popularity = Vote.average_by_popularity(puzzle.id)
       if !popularity.nil?
         popularity = popularity*25
       else
@@ -31,7 +32,6 @@ module VotesHelper
       end
       @puzzle_popularity << {:id => puzzle.id, :no => puzzle.no, :name => puzzle.name, :popularity => popularity.round}
     end
-    puts "asdasd #{@puzzle_popularity.to_json}"
     @puzzle_popularity.to_json
   end
 end
